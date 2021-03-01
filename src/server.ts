@@ -5,6 +5,7 @@ import {createServer} from 'http';
 import compression from 'compression';
 import cors from 'cors';
 import schema from './schema';
+import {sequelize} from './models';
 
 const app = express();
 const server = new ApolloServer({
@@ -21,5 +22,16 @@ const httpServer = createServer(app);
 
 httpServer.listen(
     {port:8000},
-    (): void => console.log(`server Start`)
-)
+     async () =>{
+        //  Server connect console log
+        console.log(`server Start`)
+
+        // DV connect console log
+        await sequelize.authenticate()
+        .then(async () => {
+            console.log("DB connection success")
+        })
+        .catch((e) => {
+            console.log('TT :',e)
+        })
+    })
