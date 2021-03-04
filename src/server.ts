@@ -18,8 +18,13 @@ app.use(compression());
 
 server.applyMiddleware({app, path: '/graphql'});
 
+
+
 const httpServer = createServer(app);
 
+app.get('/',function(req,res){
+    res.send('hello express')
+})
 httpServer.listen(
     {port:8000},
      async () =>{
@@ -28,7 +33,7 @@ httpServer.listen(
 
         // DV connect console log
         await sequelize.authenticate()
-        .then(async () => {
+        .then( () => {
             console.log("DB connection success")
         })
         .catch((e) => {

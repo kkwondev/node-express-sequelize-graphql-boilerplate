@@ -1,3 +1,23 @@
 type Query {
     helloWorld:String!
+    users:[Users]
+}
+
+type Users {
+    id:ID!
+    email:String!
+    nickname:String!
+    phoneNumber:String!
+    password:String!
+}
+
+input UserInput {
+    email:String!
+    nickname:String!
+    phoneNumber:String!
+    password:String!
+}
+
+type Mutation {
+    createUser(input:UserInput) : Users
 }
