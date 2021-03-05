@@ -8,7 +8,11 @@ const resolverMap: IResolvers = {
             return `Hello GraphQL!~`;
         },
         users:async() => {
-            const findAll = await Users.findAll()
+            const findAll = await Users.findAll({
+                attributes:{
+                    exclude:['password']
+                }
+            })
             return findAll
         }
     },
