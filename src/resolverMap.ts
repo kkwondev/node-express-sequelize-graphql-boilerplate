@@ -1,5 +1,7 @@
 import {IResolvers} from 'graphql-tools';
 import { Users } from './models/user';
+import bcrypt from 'bcrypt';
+
 const resolverMap: IResolvers = {
     Query: {
         helloWorld(_:void, args:void): string {
@@ -20,10 +22,11 @@ const resolverMap: IResolvers = {
             if(exUser){
                 throw new Error("이미 이메일이 있습니다.")
             }
+            const hashedPassword = await bcrypt.hash(context.input.password, 10)
            const create = await Users.create({
                email:context.input.email,
                nickname:context.input.nickname,
-               password:context.input.password,
+               password:hashedPassword,
                phoneNumber:context.input.phoneNumber
            })
            return create
