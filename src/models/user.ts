@@ -3,6 +3,7 @@ import {sequelize} from './index';
 
 interface UserAttributes {
     // id값은 defalut
+    // id:number | null,
     email:string,
     password:string | null,
     nickname:string,

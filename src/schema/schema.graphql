@@ -24,7 +24,13 @@ input UserLogin {
   password: String!
 }
 
+type UpdateUser {
+  nickname:String
+  status:String
+}
+
 type Mutation {
   createUser(input: UserInput): Users
+  updateUser(nickname:String!): UpdateUser
   login(input: UserLogin): String!
 }

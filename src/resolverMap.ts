@@ -24,7 +24,6 @@ const resolverMap: IResolvers = {
                 throw new Error('토큰값이 존재하지 않습니다. 로그인을 진행해주세요.')
             }
             const decoded = jsonwebtoken.verify(token,process.env.JWT_SECRET as string)
-            console.log((<any>decoded).id)
             const checkUser = await Users.findOne({
                 where:{
                     email:(<any>decoded).email,
@@ -73,6 +72,24 @@ const resolverMap: IResolvers = {
            process.env.JWT_SECRET as string,
             {expiresIn:'1d'}
             );
+        },
+        updateUser:async(parent,args,context,info) => {
+            const token = context.auth;
+            console.log(typeof args.nickname)
+            if(!token) {
+                throw new Error('토큰값이 존재하지 않습니다. 로그인을 진행해주세요.')
+            }
+            const decoded = jsonwebtoken.verify(token,process.env.JWT_SECRET as string)
+            const user = await Users.update({
+                nickname:args.nickname,
+            },{
+                where:{email : (<any>decoded).email}
+            })
+            console.log(user)
+            return {
+                nickname:args.nickname,
+                status:"success"
+            };
         }
     }
 }
