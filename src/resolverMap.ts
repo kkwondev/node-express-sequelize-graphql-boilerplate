@@ -10,13 +10,30 @@ const resolverMap: IResolvers = {
         helloWorld(_:void, args:void): string {
             return `Hello GraphQL!~`;
         },
-        users:async() => {
+        users: async() => {
             const findAll = await Users.findAll({
                 attributes:{
                     exclude:['password']
                 }
             })
             return findAll
+        },
+        user:async(parent,args,context,info) => {
+            const token = context.auth
+            if(!token) {
+                throw new Error('토큰값이 존재하지 않습니다. 로그인을 진행해주세요.')
+            }
+            const decoded = jsonwebtoken.verify(token,process.env.JWT_SECRET as string)
+            console.log((<any>decoded).id)
+            const checkUser = await Users.findOne({
+                where:{
+                    email:(<any>decoded).email,
+                },
+                attributes:{
+                    exclude:['password']
+                }
+            })
+            return checkUser
         }
     },
     Mutation:{
@@ -54,7 +71,7 @@ const resolverMap: IResolvers = {
                 email:user.email,
             },
            process.env.JWT_SECRET as string,
-            {expiresIn:'1h'}
+            {expiresIn:'1d'}
             );
         }
     }

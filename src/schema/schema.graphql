@@ -1,6 +1,7 @@
 type Query {
   helloWorld: String!
   users: [Users]
+  user:Users
 }
 
 type Users {

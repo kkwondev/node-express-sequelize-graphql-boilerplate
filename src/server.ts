@@ -11,6 +11,9 @@ const app = express();
 const server = new ApolloServer({
     schema,
     validationRules: [depthLimit(7)],
+    context:({req}) => ({
+        auth:(req.headers.authorization?.substr(7))
+    })
 });
 
 app.use('*',cors());
@@ -31,7 +34,7 @@ httpServer.listen(
         //  Server connect console log
         console.log(`server Start`)
 
-        // DV connect console log
+        // DB connect console log
         await sequelize.authenticate()
         .then( () => {
             console.log("DB connection success")
