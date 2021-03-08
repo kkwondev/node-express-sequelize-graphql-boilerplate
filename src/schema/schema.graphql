@@ -1,32 +1,9 @@
+
+
 type Query {
   helloWorld: String!
   users: [Users]
   user:Users
-}
-
-type Users {
-  id: ID!
-  email: String!
-  nickname: String!
-  phoneNumber: String!
-  password: String!
-}
-
-input UserInput {
-  email: String!
-  nickname: String!
-  phoneNumber: String!
-  password: String!
-}
-
-input UserLogin {
-  email: String!
-  password: String!
-}
-
-type UpdateUser {
-  nickname:String
-  status:String
 }
 
 type Mutation {

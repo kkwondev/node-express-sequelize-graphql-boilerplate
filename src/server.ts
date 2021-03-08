@@ -11,7 +11,7 @@ const app = express();
 const server = new ApolloServer({
     schema,
     validationRules: [depthLimit(7)],
-    context:({req}) => ({
+    context:({req}:Express.Request & any) => ({
         auth:(req.headers.authorization?.substr(7))
     })
 });
@@ -25,7 +25,7 @@ server.applyMiddleware({app, path: '/graphql'});
 
 const httpServer = createServer(app);
 
-app.get('/',function(req,res){
+app.get('/',function(req:express.Request,res:express.Response){
     res.send('hello express')
 })
 httpServer.listen(

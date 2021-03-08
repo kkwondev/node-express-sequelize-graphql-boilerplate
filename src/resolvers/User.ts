@@ -1,15 +1,12 @@
 import {IResolvers} from 'graphql-tools';
-import { Users } from './models/user';
+import { Role, Users } from '../models/user';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const resolverMap: IResolvers = {
+const User: IResolvers = {
     Query: {
-        helloWorld(_:void, args:void): string {
-            return `Hello GraphQL!~`;
-        },
         users: async() => {
             const findAll = await Users.findAll({
                 attributes:{
@@ -50,7 +47,8 @@ const resolverMap: IResolvers = {
                email:context.input.email,
                nickname:context.input.nickname,
                password:hashedPassword,
-               phoneNumber:context.input.phoneNumber
+               phoneNumber:context.input.phoneNumber,
+               role:Role.User
            })
            return create
             },
@@ -75,7 +73,6 @@ const resolverMap: IResolvers = {
         },
         updateUser:async(parent,args,context,info) => {
             const token = context.auth;
-            console.log(typeof args.nickname)
             if(!token) {
                 throw new Error('토큰값이 존재하지 않습니다. 로그인을 진행해주세요.')
             }
@@ -94,4 +91,4 @@ const resolverMap: IResolvers = {
     }
 }
 
-export default resolverMap;
+export default User;

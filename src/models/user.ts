@@ -10,9 +10,9 @@ interface UserAttributes {
     phoneNumber:number,
     role:Role,
 }
-enum Role {
-    User,
-    Admin
+export enum Role {
+    User ='USER',
+    Admin = 'ADMIN'
 }
 export class Users extends Model<UserAttributes>{
     public readonly id! : number;
@@ -20,7 +20,6 @@ export class Users extends Model<UserAttributes>{
     public password! : string;
     public nickname! : string;
     public phoneNumber! :number;
-    public role!:Role;
 }
 
 Users.init(
