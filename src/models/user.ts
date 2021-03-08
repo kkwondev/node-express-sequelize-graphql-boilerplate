@@ -7,15 +7,20 @@ interface UserAttributes {
     email:string,
     password:string | null,
     nickname:string,
-    phoneNumber:number
+    phoneNumber:number,
+    role:Role,
 }
-
+enum Role {
+    User,
+    Admin
+}
 export class Users extends Model<UserAttributes>{
     public readonly id! : number;
     public email! : string;
     public password! : string;
     public nickname! : string;
     public phoneNumber! :number;
+    public role!:Role;
 }
 
 Users.init(
@@ -34,6 +39,10 @@ Users.init(
         },
         phoneNumber:{
             type:DataTypes.INTEGER,
+            allowNull:false,
+        },
+        role:{
+            type:DataTypes.ENUM('USER','ADMIN'),
             allowNull:false,
         }
     },
