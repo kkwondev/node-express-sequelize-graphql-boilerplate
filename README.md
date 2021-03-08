@@ -1,6 +1,7 @@
-# graphql Apollo-server Sequelize Typescript 
+# Graphql Apollo-server Sequelize Typescript 
 
-> Specification
+## Specification
+* [graphql] (https://graphql.org)
 * [node](https://nodejs.org)
 * [typescript](https://typescriptlang.org)
 * [sequelize](http://docs.sequelizejs.com)
