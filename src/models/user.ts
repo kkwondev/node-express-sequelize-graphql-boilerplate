@@ -1,5 +1,7 @@
 import {Sequelize, DataTypes, Optional,Model} from 'sequelize';
+import User from '../resolvers/User';
 import {sequelize} from './index';
+import { Roles } from './role';
 
 interface UserAttributes {
     // id값은 defalut
@@ -49,4 +51,6 @@ Users.init(
         updatedAt:'updateTimestamp'
     }
 )
+Users.belongsTo(Roles)
+
 Users.sync().then(() => console.log("Users table created"))
