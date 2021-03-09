@@ -48,7 +48,6 @@ const User: IResolvers = {
                nickname:context.input.nickname,
                password:hashedPassword,
                phoneNumber:context.input.phoneNumber,
-               role:Role.User
            })
            return create
             },

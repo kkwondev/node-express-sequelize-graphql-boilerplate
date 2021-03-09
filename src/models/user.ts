@@ -8,7 +8,6 @@ interface UserAttributes {
     password:string | null,
     nickname:string,
     phoneNumber:number,
-    role:Role,
 }
 export enum Role {
     User ='USER',
@@ -40,10 +39,6 @@ Users.init(
             type:DataTypes.INTEGER,
             allowNull:false,
         },
-        role:{
-            type:DataTypes.ENUM('USER','ADMIN'),
-            allowNull:false,
-        }
     },
     {
         modelName:'Users',
