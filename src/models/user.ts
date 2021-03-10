@@ -48,9 +48,15 @@ Users.init(
         sequelize,
         freezeTableName:true,
         timestamps:true,
-        updatedAt:'updateTimestamp'
+        updatedAt:'updateTimestamp',
     }
 )
-Users.belongsTo(Roles)
+Users.belongsTo(Roles,{
+    foreignKey:{
+        allowNull:false,
+        defaultValue:1
+    },
+    as:'roles'
+})
 
 Users.sync().then(() => console.log("Users table created"))

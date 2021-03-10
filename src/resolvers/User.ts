@@ -1,8 +1,9 @@
 import {IResolvers} from 'graphql-tools';
-import { Role, Users } from '../models/user';
+import { Users } from '../models/user';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
+import {Roles} from '../models/role';
 dotenv.config();
 
 const User: IResolvers = {
@@ -11,8 +12,13 @@ const User: IResolvers = {
             const findAll = await Users.findAll({
                 attributes:{
                     exclude:['password']
-                }
+                }, include:[{
+                    model:Roles,
+                    attributes: ['name'],
+                    as:'roles'
+                }]
             })
+            console.log(findAll)
             return findAll
         },
         user:async(parent,args,context,info) => {

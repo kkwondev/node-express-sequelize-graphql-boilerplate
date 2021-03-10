@@ -2,18 +2,15 @@ import {sequelize} from './index';
 import { DataTypes, Model } from 'sequelize';
 import {Users} from './user';
 
-interface RoleAttributes {
-    name:Role
-}
 
 enum Role {
     User ='USER',
     Admin = 'ADMIN'
 }
 
-export class Roles extends Model<RoleAttributes> {
+export class Roles extends Model {
     public readonly id! :number;
-    public name! : Role;
+    public name!: Role;
 }
 
 Roles.init(
@@ -31,5 +28,3 @@ Roles.init(
         timestamps:false,
     }
 )
-
-export default Roles;

@@ -4,7 +4,12 @@ type Users {
   nickname: String!
   phoneNumber: String!
   password: String!
-  role:String
+  rolesId:Int!
+  roles:Roles
+}
+
+type Roles {
+  name:String!
 }
 
 input UserInput {
