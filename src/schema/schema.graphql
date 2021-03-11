@@ -10,4 +10,5 @@ type Mutation {
   createUser(input: UserInput): Users
   updateUser(nickname:String!): UpdateUser
   login(input: UserLogin): String!
+  updateRole(id:updateRoleData!):Users
 }

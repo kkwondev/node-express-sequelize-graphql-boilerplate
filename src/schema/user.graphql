@@ -28,3 +28,8 @@ type UpdateUser {
   nickname:String
   status:String
 }
+
+input updateRoleData {
+  id:Int!
+  rolesId:Int!
+}

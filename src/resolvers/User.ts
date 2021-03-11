@@ -18,7 +18,6 @@ const User: IResolvers = {
                     as:'roles'
                 }]
             })
-            console.log(findAll)
             return findAll
         },
         user:async(parent,args,context,info) => {
@@ -62,7 +61,7 @@ const User: IResolvers = {
             const user = await Users.findOne({
                where:{
                    email:email
-               }
+               },
             })
             if(!user)  throw new Error('존재하지 않은 이메일입니다.')
             const valid = await bcrypt.compare(password, user.password);
@@ -87,11 +86,43 @@ const User: IResolvers = {
             },{
                 where:{email : (<any>decoded).email}
             })
-            console.log(user)
             return {
                 nickname:args.nickname,
                 status:"success"
             };
+        },
+        updateRole:async(parent,args,context,info)=> {
+            const token = context.auth;
+            if(!token) {
+                throw new Error('토큰값이 존재하지 않습니다. 로그인을 진행해주세요.')
+            }
+            const decoded = jsonwebtoken.verify(token,process.env.JWT_SECRET as string)
+            const isAdmin = await Users.findOne({
+                where:{
+                    email:(<any>decoded).email
+                },
+                attributes:['rolesId']
+            })
+            if(isAdmin?.getDataValue('rolesId') === 1) {
+                throw new Error('관리자에게 문의하세요.')
+            }
+            const addAdmin = await Users.update({
+                rolesId:args.id.rolesId
+            },{
+                where:{
+                    id:args.id.id
+                }
+            })
+            const user = await Users.findOne({
+                where:{
+                    id:args.id.id
+                },include:[{
+                    model:Roles,
+                    attributes: ['name'],
+                    as:'roles'
+                }]
+            })
+            return user
         }
     }
 }

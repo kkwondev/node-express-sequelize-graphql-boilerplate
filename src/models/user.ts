@@ -3,19 +3,11 @@ import User from '../resolvers/User';
 import {sequelize} from './index';
 import { Roles } from './role';
 
-interface UserAttributes {
-    // id값은 defalut
-    // id:number | null,
-    email:string,
-    password:string | null,
-    nickname:string,
-    phoneNumber:number,
-}
 export enum Role {
     User ='USER',
     Admin = 'ADMIN'
 }
-export class Users extends Model<UserAttributes>{
+export class Users extends Model{
     public readonly id! : number;
     public email! : string;
     public password! : string;
