@@ -29,7 +29,11 @@ const User: IResolvers = {
             const checkUser = await Users.findOne({
                 where:{
                     email:(<any>decoded).email,
-                },
+                },include:[{
+                    model:Roles,
+                    attributes:['name'],
+                    as:'roles'
+                }],
                 attributes:{
                     exclude:['password']
                 }
